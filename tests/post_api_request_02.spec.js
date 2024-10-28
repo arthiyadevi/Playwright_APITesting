@@ -1,23 +1,13 @@
-
 //Load Playwright module
-const{test,expect}=require('@playwright/test');
+const{test,expect} = require('@playwright/test')
+const bookingAPIRequestBody = require('../test-data/post_request_body.json')
 
 // Write a test
 test('Create POST api request using static request body',async({request})=>{
     
     // create post API request
     const postAPIResponse = await request.post('/booking',{
-        data:{
-            "firstname": "Arthi",
-            "lastname": "Thiru",
-            "totalprice": 1000,
-            "depositpaid": true,
-            "bookingdates": {
-                "checkin": "2018-01-01",
-                "checkout": "2019-01-01"
-            },
-            "additionalneeds": "super bowls"
-        }
+        data:bookingAPIRequestBody
     })
 
    const postAPIResponseBody= await postAPIResponse.json();
@@ -36,6 +26,3 @@ test('Create POST api request using static request body',async({request})=>{
    expect(postAPIResponseBody.booking.bookingdates).toHaveProperty("checkout","2019-01-01")
 
 })
-
-
-
